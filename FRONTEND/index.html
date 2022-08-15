@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Perpustakaan Teman Kita</title>
+    <link rel="icon" href="./logo.png" />
+    <script src="https://unpkg.com/vue@3"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body>
+    <div id="app">
+      <header
+        class="flex justify-between items-center px-5 w-full h-[60px] bg-[#6FB2D2] font-bold"
+      >
+        <figure class="flex gap-x-2 items-center">
+          <img width="70" src="./logo.png" alt="" />
+          <figcaption class="font-bold">Perpustakaan Teman Kita</figcaption>
+        </figure>
+        <nav>
+          <ul class="flex gap-x-4 font-semibold">
+            <span>Beranda</span>
+            <span>Data Buku</span>
+          </ul>
+        </nav>
+      </header>
+      <div
+        class="w-full h-screen flex flex-col pt-20 items-center bg-[#B2B1B9]"
+      >
+        <form
+          @submit.prevent="buku.isUpdate ? updateBuku() : submitBuku()"
+          class="flex flex-col justify-center items-center"
+        >
+          <div class="flex flex-row gap-x-4 pb-5 text-black">
+            <div class="">
+              <input
+                class="w-full text-sm px-2 py-2 bg-[#6FB2D2] border text-black placeholder-black border-gray-700 rounded-lg focus:outline-none"
+                type="text"
+                placeholder="Judul Buku"
+                v-model="buku.judul"
+              />
+            </div>
+            <div class="">
+              <input
+                class="w-full text-sm px-2 py-2 bg-[#6FB2D2] border text-black placeholder-black border-gray-700 rounded-lg focus:outline-none"
+                type="text"
+                placeholder="Penulis"
+                v-model="buku.penulis"
+              />
+            </div>
+            <div class="">
+              <input
+                class="w-full text-sm px-2 py-2 bg-[#6FB2D2] border text-black placeholder-black border-gray-700 rounded-lg focus:outline-none"
+                type="text"
+                placeholder="Penerbit"
+                v-model="buku.penerbit"
+              />
+            </div>
+            <div class="">
+              <input
+                class="w-full text-sm px-2 py-2 bg-[#6FB2D2] border text-black placeholder-black border-gray-700 rounded-lg focus:outline-none"
+                type="text"
+                placeholder="Tahun Terbit"
+                v-model="buku.tahun"
+              />
+            </div>
+          </div>
+          <div class="pb-5">
+            <button
+              type="submit"
+              class="px-6 py-2.5 bg-blue-400 text-white font-medium text-xs rounded focus:outline-none shadow-lg"
+            >
+              {{buku.isUpdate ? 'Ubah' : 'Simpan'}}
+            </button>
+          </div>
+        </form>
+        <div class="overflow-x-auto rounded-lg">
+          <table class="shadow-lg bg-white">
+            <tr class="bg-[#6FB2D2] text-center text-sm">
+              <th class="px-5 py-4">Judul Buku</th>
+              <th class="px-5 py-4">Penulis</th>
+              <th class="px-5 py-4">Penerbit</th>
+              <th class="px-5 py-4">Tahun Terbit</th>
+              <th class="px-5 py-4">Aksi</th>
+            </tr>
+            <tr class="text-sm" v-for="(item, index) in buku.list" :key="index">
+              <td class="px-5 py-4">{{item.judul}}</td>
+              <td class="px-5 py-4">{{item.penulis}}</td>
+              <td class="px-5 py-4">{{item.penerbit}}</td>
+              <td class="px-5 py-4">{{item.tahun}}</td>
+              <td class="px-5 py-4 flex items-center gap-x-3">
+                <span class="cursor-pointer">
+                  <img
+                    @click="deleteBuku(item.id)"
+                    width="20"
+                    src="./icon-trash.png"
+                    alt=""
+                  />
+                </span>
+                <span class="cursor-pointer">
+                  <img
+                    @click="getBukuById(item.id)"
+                    width="23"
+                    src="./icon-edit.png"
+                    alt=""
+                  />
+                </span>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+    <script src="./index.js"></script>
+  </body>
+</html>
